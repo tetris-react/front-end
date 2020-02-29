@@ -1,26 +1,51 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect } from 'react';
+import ResizeAware from 'react-resize-aware';
+import styled from 'styled-components';
+import { Matrix } from './components';
+import { scale } from './styles';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Container>
+      <PlaceHolder />
+      <Matrix />
+      <PlaceHolder />
+    </Container>
   );
 }
+
+const Container = styled.div`
+  display: flex;
+
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  width: 100vw;
+  height: 56.25vw;
+  max-width: 177.78vh; /* 16:9 aspect ratio */
+  max-height: 100vh;
+  margin: auto;
+
+  background-color: #c0c0c0;
+`;
+
+const PlaceHolder = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+
+  width: 100vw;
+  height: 56.25vw;
+  max-width: calc(100% / 3);
+  max-height: 100vh;
+  margin: auto;
+
+  flex-grow: 1;
+
+  background-color: #a0d0df;
+`;
 
 export default App;
