@@ -1,20 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
-import {
-  dropActiveTetromino,
-  spawnTetromino_T
-} from '../../store';
 import { Cell } from './components/Cell';
 
 const Matrix = () => {
   const dispatch = useDispatch();
-  const {
-    matrix,
-    tetrominoActive,
-    activeTetroCoords,
-    dropDelay
-  } = useSelector(state => state.matrix);
+  const { matrix } = useSelector(state => state.matrix);
 
   // useEffect(
   //   () => {
