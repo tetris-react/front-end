@@ -1,12 +1,17 @@
 import React, { useEffect } from 'react';
-import ResizeAware from 'react-resize-aware';
+import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { Matrix } from './components';
-import { scale } from './styles';
+import StartGameModal from './components/modals/StartGameModal';
 
 function App() {
+  const gameStarted = useSelector(
+    state => state.game.started
+  );
+
   return (
     <Container>
+      {!gameStarted && <StartGameModal />}
       <PlaceHolder />
       <Matrix />
       <PlaceHolder />
