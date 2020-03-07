@@ -21,9 +21,11 @@ const useListenKeyPress = () => {
 
   useEffect(() => {
     window.addEventListener('keydown', keyDownHandler);
+    window.addEventListener('keyup', setPressedKey(''));
 
     return () => {
       window.removeEventListener('keydown', keyDownHandler);
+      window.addEventListener('keyup', setPressedKey(''));
     };
   });
 

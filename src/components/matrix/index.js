@@ -1,51 +1,88 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
+import { useListenKeyPress } from '../../custom-hooks/';
+import {
+  autoDropActiveTetromino,
+  moveTetrominoDown,
+  moveTetrominoLeft,
+  moveTetrominoRight,
+  spawnNextTetromino
+} from '../../store/index';
 import { Cell } from './components/Cell';
 
 const Matrix = () => {
+  const {
+    matrix,
+    activeTetromino,
+    tetrominoSpawned
+  } = useSelector(state => state.matrix);
+
+  const gameStarted = useSelector(
+    state => state.game.started
+  );
+
+  const pressedKey = useListenKeyPress();
+
   const dispatch = useDispatch();
-  const { matrix } = useSelector(state => state.matrix);
 
-  // useEffect(
-  //   () => {
-  //     if (!tetrominoActive) {
-  //       dispatch(spawnTetromino_T());
-  //     }
-  //   },
-  //   [matrix, tetrominoActive, dispatch]
-  // );
+  useEffect(
+    () => {
+      if (gameStarted) {
+        dispatch(spawnNextTetromino());
+      }
+    },
+    [gameStarted, dispatch]
+  );
 
-  // useEffect(
-  //   () => {
-  //     if (tetrominoActive) {
-  //       const interval = setInterval(() => {
-  //         dispatch(dropActiveTetromino(activeTetroCoords));
-  //       }, dropDelay);
+  useEffect(
+    () => {
+      if (tetrominoSpawned) {
+        const interval = setInterval(() => {
+          dispatch(
+            autoDropActiveTetromino(activeTetromino)
+          );
+        }, 1000);
+        return () => clearInterval(interval);
+      }
+    },
+    [tetrominoSpawned, activeTetromino, dispatch]
+  );
 
-  //       return () => clearInterval(interval);
-  //     }
-  //   },
-  //   [activeTetroCoords, dropDelay, tetrominoActive]
-  // );
+  useEffect(
+    () => {
+      switch (pressedKey) {
+        case 'down':
+          dispatch(moveTetrominoDown(activeTetromino));
+          break;
+        case 'left':
+          dispatch(moveTetrominoLeft(activeTetromino));
+          break;
+        case 'right':
+          dispatch(moveTetrominoRight(activeTetromino));
+          break;
+        default:
+          break;
+      }
+    },
+    [pressedKey, activeTetromino, dispatch]
+  );
 
   return (
     <Container>
-      {matrix.map(column =>
-        column.map(cell => {
-          return (
-            <Cell
-              key={cell.x + cell.y}
-              isLocked={cell.isLocked}
-              isActive={cell.isActive}
-              coordinate={{
-                x: cell.x,
-                y: cell.y
-              }}
-            />
-          );
-        })
-      )}
+      {matrix.flatten().map((cell, i) => {
+        return (
+          <Cell
+            key={i}
+            isLocked={cell.isLocked}
+            isActive={cell.isActive}
+            coordinate={{
+              x: cell.x,
+              y: cell.y
+            }}
+          />
+        );
+      })}
     </Container>
   );
 };

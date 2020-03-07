@@ -1,25 +1,117 @@
+import { Cell, Matrix, Tetromino } from '../datatypes';
 import {
-  DROP_ACTIVE_TETROMINO,
-  SPAWN_TETROMINO_T
-} from '../actions/matrixActions';
-import { map2DArray, new2DArray } from './helper';
+  AUTO_DROP_TETROMINO,
+  MOVE_TETROMINO_DOWN,
+  MOVE_TETROMINO_LEFT,
+  MOVE_TETROMINO_RIGHT,
+  SPAWN_NEXT_TETROMINO
+} from '../index';
 
 const numRows = 20;
 const numColumns = 10;
 
-const initialCellState = {
-  isActive: false,
-  isLocked: false,
-  x: 0,
-  y: 0
-};
-
 const initialState = {
-  matrix: new2DArray(numRows, numColumns, initialCellState)
+  matrix: new Matrix(numRows, numColumns).map2D(
+    (_, x, y) => new Cell(false, false, x, y)
+  ),
+  activeTetromino: new Tetromino(),
+  tetrominoSpawned: false
 };
 
 const matrixReducer = (state = initialState, action) => {
+  const matrix = state.matrix;
+
   switch (action.type) {
+    case SPAWN_NEXT_TETROMINO: {
+      const nextTetromino = action.payload;
+      const initialCoordinates = nextTetromino.coordinates;
+
+      return {
+        matrix: matrix.map2D((cell, x, y) => {
+          initialCoordinates.forEach(coordinate => {
+            if (x === coordinate.x && y === coordinate.y) {
+              cell.activate();
+            }
+          });
+          return cell;
+        }),
+        activeTetromino: nextTetromino,
+        tetrominoSpawned: true
+      };
+    }
+
+    case AUTO_DROP_TETROMINO: {
+      const activeTetromino = action.payload;
+      const nextCoordinates = activeTetromino.coordinates;
+      return {
+        matrix: matrix.map2D(cell => {
+          cell.deactivate();
+          nextCoordinates.forEach(coord => {
+            if (cell.x === coord.x && cell.y === coord.y) {
+              cell.activate();
+            }
+          });
+          return cell;
+        }),
+        activeTetromino: action.payload,
+        ...state
+      };
+    }
+
+    case MOVE_TETROMINO_DOWN: {
+      const activeTetromino = action.payload;
+      const nextCoordinates = activeTetromino.coordinates;
+      return {
+        matrix: matrix.map2D(cell => {
+          cell.deactivate();
+          nextCoordinates.forEach(coord => {
+            if (cell.x === coord.x && cell.y === coord.y) {
+              cell.activate();
+            }
+          });
+          return cell;
+        }),
+        activeTetromino: action.payload,
+        ...state
+      };
+    }
+
+    case MOVE_TETROMINO_LEFT: {
+      const activeTetromino = action.payload;
+      const nextCoordinates = activeTetromino.coordinates;
+      return {
+        matrix: matrix.map2D(cell => {
+          cell.deactivate();
+          nextCoordinates.forEach(coord => {
+            if (cell.x === coord.x && cell.y === coord.y) {
+              cell.activate();
+            }
+          });
+          return cell;
+        }),
+        activeTetromino: action.payload,
+        ...state
+      };
+    }
+
+    case MOVE_TETROMINO_RIGHT: {
+      const activeTetromino = action.payload;
+      const nextCoordinates = activeTetromino.coordinates;
+      return {
+        matrix: matrix.map2D(cell => {
+          cell.deactivate();
+          nextCoordinates.forEach(coord => {
+            if (cell.x === coord.x && cell.y === coord.y) {
+              cell.activate();
+            }
+          });
+          return cell;
+        }),
+        activeTetromino: action.payload,
+        ...state
+      };
+    }
+
     default:
       return state;
   }

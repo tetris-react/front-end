@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 export const Cell = props => {
+  // console.log('props', props);
   return (
     <Container
       isLocked={props.isLocked}

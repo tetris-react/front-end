@@ -11,7 +11,6 @@ const StartGameModal = () => {
 
   const handleClick = () => {
     dispatch(beginTetris());
-    dispatch(spawnNextTetromino());
   };
 
   return (
@@ -31,7 +30,7 @@ const Container = styled.div`
   width: 100%;
   height: 100vh;
 
-  background-color: rgb(0, 0, 0, .5);
+  background-color: rgb(0, 0, 0, .75);
 `;
 
 const Modal = styled.div`

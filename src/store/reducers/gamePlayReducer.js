@@ -1,7 +1,8 @@
 import { BEGIN_TETRIS } from '../actions/gamePlayActions';
 
 const initialState = {
-  started: false
+  started: false,
+  tetrominoInPlay: false
 };
 
 const gamePlayReducer = (state = initialState, action) => {

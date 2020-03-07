@@ -2,32 +2,33 @@
 *                        REDUCERS                      *
 ********************************************************/
 import { combineReducers } from 'redux';
-import activeTetrominoReducer from './reducers/activeTetrominoReducer';
 import gamePlayReducer from './reducers/gamePlayReducer';
 import matrixReducer from './reducers/matrixReducer';
 
 export default combineReducers({
   matrix: matrixReducer,
-  activeTetromino: activeTetrominoReducer,
   game: gamePlayReducer
 });
 
 /********************************************************
-*                        ACTIONS                        *
+*                     ACTION CREATORS                   *
 ********************************************************/
+export { beginTetris } from './actions/gamePlayActions';
 
 export {
-  // ACTIONS
-  dropActiveTetromino,
-  // ACTION TYPES
-  SPAWN_TETROMINO_T,
-  DROP_ACTIVE_TETROMINO
+  spawnNextTetromino,
+  autoDropActiveTetromino,
+  moveTetrominoLeft,
+  moveTetrominoDown,
+  moveTetrominoRight
 } from './actions/matrixActions';
 
+/********************************************************
+*                       ACTION TYPES                    *
+********************************************************/
+export { BEGIN_TETRIS } from './actions/gamePlayActions';
+
 export {
-  // ACTIONS
-  spawnNextTetromino,
-  // ACTION TYPES
   SPAWN_NEXT_TETROMINO,
   ROTATE_TETROMINO_LEFT,
   ROTATE_TETROMINO_RIGHT,
@@ -35,11 +36,6 @@ export {
   MOVE_TETROMINO_RIGHT,
   MOVE_TETROMINO_DOWN,
   AUTO_DROP_TETROMINO,
-  SOFT_DROP_TETROMINO,
-  FAST_DROP_TETROMINO
-} from './actions/activeTetrominoActions';
-
-export {
-  beginTetris,
-  BEGIN_TETRIS
-} from './actions/gamePlayActions';
+  MANUAL_SOFTDROP_TETROMINO,
+  MANUAL_FASTDROP_TETROMINO
+} from './actions/matrixActions';
