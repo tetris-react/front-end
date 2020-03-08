@@ -1,6 +1,5 @@
 import { Cell, Matrix, Tetromino } from '../datatypes';
 import {
-  AUTO_DROP_TETROMINO,
   MOVE_TETROMINO,
   SPAWN_NEXT_TETROMINO
 } from '../index';
