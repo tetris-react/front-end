@@ -36,11 +36,11 @@ const Matrix = () => {
   useEffect(
     () => {
       if (tetrominoSpawned) {
-        const interval = setInterval(() => {
-          dispatch(moveTetromino(activeTetromino, 'down'));
-          console.log(activeTetromino.coordinates);
-        }, 1000);
-        return () => clearInterval(interval);
+        // const interval = setInterval(() => {
+        //   dispatch(moveTetromino(activeTetromino, 'down'));
+        //   console.log(activeTetromino.coordinates);
+        // }, 1000);
+        // return () => clearInterval(interval);
       }
     },
     [tetrominoSpawned, activeTetromino, dispatch]
