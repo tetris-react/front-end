@@ -3,10 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { useListenKeyPress } from '../../custom-hooks/';
 import {
-  autoDropActiveTetromino,
-  moveTetrominoDown,
-  moveTetrominoLeft,
-  moveTetrominoRight,
+  moveTetromino,
   spawnNextTetromino
 } from '../../store/index';
 import { Cell } from './components/Cell';
@@ -22,7 +19,7 @@ const Matrix = () => {
     state => state.game.started
   );
 
-  const pressedKey = useListenKeyPress();
+  const direction = useListenKeyPress();
 
   const dispatch = useDispatch();
 
@@ -39,9 +36,7 @@ const Matrix = () => {
     () => {
       if (tetrominoSpawned) {
         const interval = setInterval(() => {
-          dispatch(
-            autoDropActiveTetromino(activeTetromino)
-          );
+          dispatch(moveTetromino(activeTetromino, 'down'));
         }, 1000);
         return () => clearInterval(interval);
       }
@@ -51,21 +46,10 @@ const Matrix = () => {
 
   useEffect(
     () => {
-      switch (pressedKey) {
-        case 'down':
-          dispatch(moveTetrominoDown(activeTetromino));
-          break;
-        case 'left':
-          dispatch(moveTetrominoLeft(activeTetromino));
-          break;
-        case 'right':
-          dispatch(moveTetrominoRight(activeTetromino));
-          break;
-        default:
-          break;
-      }
+      if (direction)
+        dispatch(moveTetromino(activeTetromino, direction));
     },
-    [pressedKey, activeTetromino, dispatch]
+    [direction, activeTetromino, dispatch]
   );
 
   return (

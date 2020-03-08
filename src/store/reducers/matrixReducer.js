@@ -1,9 +1,7 @@
 import { Cell, Matrix, Tetromino } from '../datatypes';
 import {
   AUTO_DROP_TETROMINO,
-  MOVE_TETROMINO_DOWN,
-  MOVE_TETROMINO_LEFT,
-  MOVE_TETROMINO_RIGHT,
+  MOVE_TETROMINO,
   SPAWN_NEXT_TETROMINO
 } from '../index';
 
@@ -40,61 +38,7 @@ const matrixReducer = (state = initialState, action) => {
       };
     }
 
-    case AUTO_DROP_TETROMINO: {
-      const activeTetromino = action.payload;
-      const nextCoordinates = activeTetromino.coordinates;
-      return {
-        matrix: matrix.map2D(cell => {
-          cell.deactivate();
-          nextCoordinates.forEach(coord => {
-            if (cell.x === coord.x && cell.y === coord.y) {
-              cell.activate();
-            }
-          });
-          return cell;
-        }),
-        activeTetromino: action.payload,
-        ...state
-      };
-    }
-
-    case MOVE_TETROMINO_DOWN: {
-      const activeTetromino = action.payload;
-      const nextCoordinates = activeTetromino.coordinates;
-      return {
-        matrix: matrix.map2D(cell => {
-          cell.deactivate();
-          nextCoordinates.forEach(coord => {
-            if (cell.x === coord.x && cell.y === coord.y) {
-              cell.activate();
-            }
-          });
-          return cell;
-        }),
-        activeTetromino: action.payload,
-        ...state
-      };
-    }
-
-    case MOVE_TETROMINO_LEFT: {
-      const activeTetromino = action.payload;
-      const nextCoordinates = activeTetromino.coordinates;
-      return {
-        matrix: matrix.map2D(cell => {
-          cell.deactivate();
-          nextCoordinates.forEach(coord => {
-            if (cell.x === coord.x && cell.y === coord.y) {
-              cell.activate();
-            }
-          });
-          return cell;
-        }),
-        activeTetromino: action.payload,
-        ...state
-      };
-    }
-
-    case MOVE_TETROMINO_RIGHT: {
+    case MOVE_TETROMINO: {
       const activeTetromino = action.payload;
       const nextCoordinates = activeTetromino.coordinates;
       return {

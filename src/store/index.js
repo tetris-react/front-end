@@ -17,10 +17,7 @@ export { beginTetris } from './actions/gamePlayActions';
 
 export {
   spawnNextTetromino,
-  autoDropActiveTetromino,
-  moveTetrominoLeft,
-  moveTetrominoDown,
-  moveTetrominoRight
+  moveTetromino
 } from './actions/matrixActions';
 
 /********************************************************
@@ -32,9 +29,7 @@ export {
   SPAWN_NEXT_TETROMINO,
   ROTATE_TETROMINO_LEFT,
   ROTATE_TETROMINO_RIGHT,
-  MOVE_TETROMINO_LEFT,
-  MOVE_TETROMINO_RIGHT,
-  MOVE_TETROMINO_DOWN,
+  MOVE_TETROMINO,
   AUTO_DROP_TETROMINO,
   MANUAL_SOFTDROP_TETROMINO,
   MANUAL_FASTDROP_TETROMINO

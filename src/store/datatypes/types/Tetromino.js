@@ -13,6 +13,32 @@ export const Tetromino = function(
   this.orientation = orientation;
 };
 
+Tetromino.prototype.shift = function(direction) {
+  this.coordinates = this.coordinates.map(coordinates => {
+    switch (direction) {
+      case 'down':
+        return {
+          x: coordinates.x,
+          y: ++coordinates.y
+        };
+      case 'left':
+        return {
+          x: --coordinates.x,
+          y: coordinates.y
+        };
+      case 'right':
+        return {
+          x: ++coordinates.x,
+          y: coordinates.y
+        };
+      default:
+        return coordinates;
+    }
+  });
+
+  return this;
+};
+
 Tetromino.prototype.drop = function() {
   console.log('this.coordinates', this.coordinates);
   this.coordinates = this.coordinates.map(({ x, y }) => {
