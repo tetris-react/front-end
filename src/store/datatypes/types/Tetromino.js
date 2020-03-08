@@ -39,40 +39,9 @@ Tetromino.prototype.shift = function(direction) {
   return this;
 };
 
-Tetromino.prototype.drop = function() {
-  console.log('this.coordinates', this.coordinates);
-  this.coordinates = this.coordinates.map(({ x, y }) => {
-    return {
-      x,
-      y: y + 1
-    };
-  });
-  console.log('this.coordinates after', this.coordinates);
-  return this;
-};
-
-Tetromino.prototype.shiftLeft = function() {
-  this.coordinates = this.coordinates.map(({ x, y }) => {
-    return {
-      x: x - 1,
-      y
-    };
-  });
-
-  return this;
-};
-
-Tetromino.prototype.shiftRight = function() {
-  this.coordinates = this.coordinates.map(({ x, y }) => {
-    return {
-      x: x + 1,
-      y
-    };
-  });
-
-  return this;
-};
-
+/********************************************************
+*                      TETROMINOS                      *
+********************************************************/
 export const tetromino_I = new Tetromino(
   'I',
   [
