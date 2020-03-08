@@ -1,11 +1,3 @@
-import {
-  tetromino_I,
-  tetromino_J,
-  tetromino_L,
-  tetromino_S,
-  tetromino_T,
-  tetromino_Z
-} from '../datatypes/types/Tetromino';
 /********************************************************
 *                    MATRIX ACTIONS                     *
 ********************************************************/
@@ -29,7 +21,7 @@ export const spawnNextTetromino = (
 ) => dispatch => {
   dispatch({
     type: SPAWN_NEXT_TETROMINO,
-    payload: getRandomTetromino()
+    nextTetromino: getRandomTetromino()
   });
 };
 
@@ -39,7 +31,7 @@ export const moveTetromino = (
 ) => dispatch => {
   dispatch({
     type: MOVE_TETROMINO,
-    payload: activeTetromino.shift(direction)
+    activeTetromino: activeTetromino.shift(direction)
   });
 };
 
@@ -47,6 +39,6 @@ export const rotateTetromino = activeTetromino => dispatch => {
   if (activeTetromino.type !== 'O')
     dispatch({
       type: MOVE_TETROMINO,
-      payload: activeTetromino.rotate()
+      activeTetromino: activeTetromino.rotate()
     });
 };

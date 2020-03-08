@@ -20,9 +20,8 @@ const matrixReducer = (state = initialState, action) => {
 
   switch (action.type) {
     case SPAWN_NEXT_TETROMINO: {
-      const nextTetromino = action.payload;
+      const nextTetromino = action.nextTetromino;
       const initialCoordinates = nextTetromino.coordinates;
-
       return {
         matrix: matrix.map2D((cell, x, y) => {
           initialCoordinates.forEach(coordinate => {
@@ -38,7 +37,7 @@ const matrixReducer = (state = initialState, action) => {
     }
 
     case MOVE_TETROMINO: {
-      const activeTetromino = action.payload;
+      const activeTetromino = action.activeTetromino;
       const nextCoordinates = activeTetromino.coordinates;
       return {
         matrix: matrix.map2D(cell => {
@@ -50,7 +49,7 @@ const matrixReducer = (state = initialState, action) => {
           });
           return cell;
         }),
-        activeTetromino: action.payload,
+        activeTetromino,
         ...state
       };
     }
