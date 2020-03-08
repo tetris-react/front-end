@@ -20,24 +20,3 @@ export const getRandomTetromino = lastType => {
 
   return tetrominos[nextNumber];
 };
-
-export const shiftTetrominoLeft = activeTetromino => {
-  return activeTetromino.coordinates.map(coordinate => {
-    coordinate.x -= 1;
-    return coordinate;
-  });
-};
-
-export const shiftTetrominoRight = activeTetromino => {
-  return activeTetromino.coordinates.map(coordinate => {
-    coordinate.x += 1;
-    return coordinate;
-  });
-};
-
-export const shiftTetrominoDown = activeTetromino => {
-  return activeTetromino.coordinates.map(coordinate => {
-    coordinate.y += 1;
-    return coordinate;
-  });
-};
