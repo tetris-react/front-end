@@ -1,3 +1,11 @@
+import {
+  tetromino_I,
+  tetromino_J,
+  tetromino_L,
+  tetromino_S,
+  tetromino_T,
+  tetromino_Z
+} from '../datatypes/types/Tetromino';
 /********************************************************
 *                    MATRIX ACTIONS                     *
 ********************************************************/
@@ -7,10 +15,8 @@ import { getRandomTetromino } from './helper';
 *                     ACTION TYPES                      *
 ********************************************************/
 export const SPAWN_NEXT_TETROMINO = 'SPAWN_NEXT_TETROMINO',
-  ROTATE_TETROMINO_LEFT = 'ROTATE_TETROMINO_LEFT',
-  ROTATE_TETROMINO_RIGHT = 'ROTATE_TETROMINO_RIGHT',
+  ROTATE_TETROMINO = 'ROTATE_TETROMINO',
   MOVE_TETROMINO = 'MOVE_TETROMINO',
-  AUTO_DROP_TETROMINO = 'AUTO_DROP_TETROMINO',
   MANUAL_SOFTDROP_TETROMINO = 'SOFT_DROP_TETROMINO',
   MANUAL_FASTDROP_TETROMINO = 'FAST_DROP_TETROMINO';
 
@@ -23,7 +29,7 @@ export const spawnNextTetromino = (
 ) => dispatch => {
   dispatch({
     type: SPAWN_NEXT_TETROMINO,
-    payload: getRandomTetromino(lastType)
+    payload: getRandomTetromino()
   });
 };
 
@@ -35,4 +41,12 @@ export const moveTetromino = (
     type: MOVE_TETROMINO,
     payload: activeTetromino.shift(direction)
   });
+};
+
+export const rotateTetromino = activeTetromino => dispatch => {
+  if (activeTetromino.type !== 'O')
+    dispatch({
+      type: MOVE_TETROMINO,
+      payload: activeTetromino.rotate()
+    });
 };

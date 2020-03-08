@@ -11,6 +11,9 @@ const useListenKeyPress = () => {
       case 37:
         setPressedKey('left');
         break;
+      case 38:
+        setPressedKey('rotate');
+        break;
       case 39:
         setPressedKey('right');
         break;

@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { useListenKeyPress } from '../../custom-hooks/';
 import {
   moveTetromino,
+  rotateTetromino,
   spawnNextTetromino
 } from '../../store/index';
 import { Cell } from './components/Cell';
@@ -37,6 +38,7 @@ const Matrix = () => {
       if (tetrominoSpawned) {
         const interval = setInterval(() => {
           dispatch(moveTetromino(activeTetromino, 'down'));
+          console.log(activeTetromino.coordinates);
         }, 1000);
         return () => clearInterval(interval);
       }
@@ -46,8 +48,13 @@ const Matrix = () => {
 
   useEffect(
     () => {
-      if (direction)
-        dispatch(moveTetromino(activeTetromino, direction));
+      if (direction) {
+        if (direction !== 'rotate')
+          dispatch(
+            moveTetromino(activeTetromino, direction)
+          );
+        else dispatch(rotateTetromino(activeTetromino));
+      }
     },
     [direction, activeTetromino, dispatch]
   );

@@ -17,7 +17,8 @@ export { beginTetris } from './actions/gamePlayActions';
 
 export {
   spawnNextTetromino,
-  moveTetromino
+  moveTetromino,
+  rotateTetromino
 } from './actions/matrixActions';
 
 /********************************************************
@@ -27,10 +28,8 @@ export { BEGIN_TETRIS } from './actions/gamePlayActions';
 
 export {
   SPAWN_NEXT_TETROMINO,
-  ROTATE_TETROMINO_LEFT,
-  ROTATE_TETROMINO_RIGHT,
+  ROTATE_TETROMINO,
   MOVE_TETROMINO,
-  AUTO_DROP_TETROMINO,
   MANUAL_SOFTDROP_TETROMINO,
   MANUAL_FASTDROP_TETROMINO
 } from './actions/matrixActions';
