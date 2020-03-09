@@ -36,27 +36,24 @@ const Matrix = () => {
   useEffect(
     () => {
       if (tetrominoSpawned) {
-        // const interval = setInterval(() => {
-        //   dispatch(moveTetromino(activeTetromino, 'down'));
-        //   console.log(activeTetromino.coordinates);
-        // }, 1000);
-        // return () => clearInterval(interval);
+        const interval = setInterval(() => {
+          dispatch(moveTetromino());
+        }, 1000);
+        return () => clearInterval(interval);
       }
     },
-    [tetrominoSpawned, activeTetromino, dispatch]
+    [tetrominoSpawned, matrix, activeTetromino, dispatch]
   );
 
   useEffect(
     () => {
       if (direction) {
-        if (direction !== 'rotate')
-          dispatch(
-            moveTetromino(activeTetromino, direction)
-          );
-        else dispatch(rotateTetromino(activeTetromino));
+        direction === 'rotate'
+          ? dispatch(rotateTetromino())
+          : dispatch(moveTetromino(direction));
       }
     },
-    [direction, activeTetromino, dispatch]
+    [direction, dispatch]
   );
 
   return (

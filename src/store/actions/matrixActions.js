@@ -1,15 +1,7 @@
-import {
-  tetromino_I,
-  tetromino_J,
-  tetromino_L,
-  tetromino_S,
-  tetromino_T,
-  tetromino_Z
-} from '../datatypes/types/Tetromino';
 /********************************************************
 *                    MATRIX ACTIONS                     *
 ********************************************************/
-import { getRandomTetromino } from './helper';
+import { getRandomTetromino, moveIsValid } from './helper';
 
 /********************************************************
 *                     ACTION TYPES                      *
@@ -17,6 +9,7 @@ import { getRandomTetromino } from './helper';
 export const SPAWN_NEXT_TETROMINO = 'SPAWN_NEXT_TETROMINO',
   ROTATE_TETROMINO = 'ROTATE_TETROMINO',
   MOVE_TETROMINO = 'MOVE_TETROMINO',
+  INVALID_MOVE = 'INVALID_MOVE',
   MANUAL_SOFTDROP_TETROMINO = 'SOFT_DROP_TETROMINO',
   MANUAL_FASTDROP_TETROMINO = 'FAST_DROP_TETROMINO';
 
@@ -24,29 +17,88 @@ export const SPAWN_NEXT_TETROMINO = 'SPAWN_NEXT_TETROMINO',
 *                    ACTION CREATORS                    *
 ********************************************************/
 
-export const spawnNextTetromino = (
-  lastType = ''
-) => dispatch => {
+export const spawnNextTetromino = () => (
+  dispatch,
+  state
+) => {
+  let { matrix, activeTetromino } = state().matrix;
+
+  let nextTetromino = getRandomTetromino(
+    activeTetromino.type
+  );
+
+  nextTetromino.coordinates.forEach(({ x, y }) => {
+    matrix.cell(x, y).activate();
+  });
+
   dispatch({
     type: SPAWN_NEXT_TETROMINO,
-    nextTetromino: tetromino_L
+    matrix: matrix,
+    nextTetromino: nextTetromino
   });
 };
 
-export const moveTetromino = (
-  activeTetromino,
-  direction
-) => dispatch => {
-  dispatch({
-    type: MOVE_TETROMINO,
-    activeTetromino: activeTetromino.shift(direction)
-  });
-};
+export const moveTetromino = (direction = 'down') => (
+  dispatch,
+  state
+) => {
+  let { matrix, activeTetromino } = state().matrix;
+  const nextCoords = activeTetromino.shift(direction)
+    .coordinates;
 
-export const rotateTetromino = activeTetromino => dispatch => {
-  if (activeTetromino.type !== 'O')
+  if (matrix.inBounds(nextCoords)) {
+    // deactivate all cells
+    matrix.forEach2D(cell => cell.deactivate());
+
+    // activate cells for next position
+    nextCoords.forEach(({ x, y }) => {
+      matrix.cell(x, y).activate();
+    });
+
     dispatch({
       type: MOVE_TETROMINO,
-      activeTetromino: activeTetromino.rotate()
+      matrix: matrix,
+      activeTetromino
     });
+  } else {
+    // shift the tetromino back
+    activeTetromino.unshift(direction);
+
+    dispatch({
+      type: INVALID_MOVE,
+      activeTetromino
+    });
+  }
+};
+
+export const rotateTetromino = () => (dispatch, state) => {
+  let { matrix, activeTetromino } = state().matrix;
+
+  const nextCoords = activeTetromino.rotate().coordinates;
+
+  if (activeTetromino.type !== 'O') {
+    if (matrix.inBounds(nextCoords)) {
+      // deactivate all cells
+      matrix.forEach2D(cell => cell.deactivate());
+
+      // activate cells for next position
+      nextCoords.forEach(({ x, y }) => {
+        matrix.cell(x, y).activate();
+      });
+
+      dispatch({
+        type: MOVE_TETROMINO,
+        matrix: matrix,
+        activeTetromino
+      });
+    } else {
+      // shift the tetromino back
+      activeTetromino.unrotate();
+
+      dispatch({
+        type: INVALID_MOVE,
+        activeTetromino
+      });
+    }
+  }
 };

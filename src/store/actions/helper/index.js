@@ -1,5 +1,5 @@
+import { useSelector } from 'react-redux';
 import tetrominos from '../../datatypes/types/Tetromino';
-
 /*
   Based on the original Tetris NES, Random Generator Algorithm:
 
@@ -19,4 +19,15 @@ export const getRandomTetromino = lastType => {
   } while (tetrominos[nextNumber].type === lastType);
 
   return tetrominos[nextNumber];
+};
+
+export const moveIsValid = (coordinates, matrix) => {
+  let isValid = true;
+
+  coordinates.forEach(({ x, y }) => {
+    console.log(matrix.coordInBounds(x, y));
+    isValid = matrix.coordInBounds(x, y);
+  });
+
+  return isValid;
 };

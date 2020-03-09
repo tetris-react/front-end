@@ -34,6 +34,26 @@ Tetromino.prototype.shift = function(direction) {
   return this;
 };
 
+Tetromino.prototype.unshift = function(direction) {
+  this.coordinates = this.coordinates.map(coord => {
+    switch (direction) {
+      case 'down':
+        coord.y -= 1;
+        return coord;
+      case 'left':
+        coord.x += 1;
+        return coord;
+      case 'right':
+        coord.x -= 1;
+        return coord;
+      default:
+        return coord;
+    }
+  });
+
+  return this;
+};
+
 Tetromino.prototype.rotate = function() {
   const distance = this.rotationalDistances[
     this.rotationalIndex
@@ -47,6 +67,23 @@ Tetromino.prototype.rotate = function() {
 
   this.rotationalIndex =
     this.rotationalIndex === 3 ? 0 : ++this.rotationalIndex;
+
+  return this;
+};
+
+Tetromino.prototype.unrotate = function() {
+  this.rotationalIndex =
+    this.rotationalIndex === 0 ? 3 : --this.rotationalIndex;
+
+  const distance = this.rotationalDistances[
+    this.rotationalIndex
+  ];
+
+  this.coordinates = this.coordinates.map((coord, i) => {
+    coord.x += distance[i].x * -1;
+    coord.y += distance[i].y * -1;
+    return coord;
+  });
 
   return this;
 };

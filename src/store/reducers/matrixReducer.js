@@ -16,40 +16,19 @@ const initialState = {
 };
 
 const matrixReducer = (state = initialState, action) => {
-  const matrix = state.matrix;
-
   switch (action.type) {
     case SPAWN_NEXT_TETROMINO: {
-      const nextTetromino = action.nextTetromino;
-      const initialCoordinates = nextTetromino.coordinates;
       return {
-        matrix: matrix.map2D((cell, x, y) => {
-          initialCoordinates.forEach(coordinate => {
-            if (x === coordinate.x && y === coordinate.y) {
-              cell.activate();
-            }
-          });
-          return cell;
-        }),
-        activeTetromino: nextTetromino,
+        matrix: action.matrix,
+        activeTetromino: action.nextTetromino,
         tetrominoSpawned: true
       };
     }
 
     case MOVE_TETROMINO: {
-      const activeTetromino = action.activeTetromino;
-      const nextCoordinates = activeTetromino.coordinates;
       return {
-        matrix: matrix.map2D(cell => {
-          cell.deactivate();
-          nextCoordinates.forEach(coord => {
-            if (cell.x === coord.x && cell.y === coord.y) {
-              cell.activate();
-            }
-          });
-          return cell;
-        }),
-        activeTetromino,
+        matrix: action.matrix,
+        activeTetromino: action.activeTetromino,
         ...state
       };
     }

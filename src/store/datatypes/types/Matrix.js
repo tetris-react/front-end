@@ -13,6 +13,9 @@ export const Matrix = function(
   );
 };
 
+/********************************************************
+*                       METHODS                         *
+********************************************************/
 Matrix.prototype.map2D = function(callback) {
   this.matrix = this.matrix.map((column, y) => {
     return column.map((cell, x) => {
@@ -23,6 +26,37 @@ Matrix.prototype.map2D = function(callback) {
   return this;
 };
 
+Matrix.prototype.forEach2D = function(callback) {
+  this.matrix.forEach((column, y) => {
+    column.forEach((cell, x) => {
+      callback(cell, x, y);
+    });
+  });
+
+  return this;
+};
+
 Matrix.prototype.flatten = function() {
   return [].concat(...this.matrix);
+};
+
+Matrix.prototype.inBounds = function(coordinates) {
+  let inBounds = true;
+
+  coordinates.forEach(({ x, y }) => {
+    if (
+      x < 0 ||
+      x >= this.numColumns ||
+      y < 0 ||
+      y >= this.numRows ||
+      this.cell(x, y).isOccupied
+    ) {
+      inBounds = false;
+    }
+  });
+  return inBounds;
+};
+
+Matrix.prototype.cell = function(x, y) {
+  return this.matrix[y][x];
 };
