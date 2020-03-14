@@ -42,19 +42,56 @@ Matrix.prototype.flatten = function() {
 
 Matrix.prototype.inBounds = function(coordinates) {
   let inBounds = true;
-
   coordinates.forEach(({ x, y }) => {
     if (
       x < 0 ||
       x >= this.numColumns ||
       y < 0 ||
       y >= this.numRows ||
-      this.cell(x, y).isOccupied
+      this.cell(x, y).isLocked
     ) {
       inBounds = false;
     }
   });
   return inBounds;
+};
+
+Matrix.prototype.notBlocked = function(coordinates) {
+  let notBlocked = true;
+
+  coordinates.forEach(({ x, y }) => {
+    if (this.cell(x, y).isLocked) notBlocked = false;
+  });
+
+  return notBlocked;
+};
+
+Matrix.prototype.unlockCoordinates = function(coordinates) {
+  coordinates.forEach(({ x, y }) => {
+    this.cell(x, y).isLocked = false;
+  });
+};
+
+Matrix.prototype.lockCoordinates = function(coordinates) {
+  coordinates.forEach(({ x, y }) => {
+    this.cell(x, y).isLocked = true;
+  });
+};
+
+Matrix.prototype.activateCoordinates = function(
+  coordinates
+) {
+  coordinates.forEach(({ x, y }) => {
+    this.cell(x, y).isActive = true;
+  });
+};
+
+Matrix.prototype.deactivateCoordinates = function(
+  coordinates
+) {
+  coordinates.forEach(({ x, y }) => {
+    this.cell(x, y).isActive = false;
+  });
 };
 
 Matrix.prototype.cell = function(x, y) {
