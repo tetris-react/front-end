@@ -1,18 +1,20 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
-import { useListenKeyPress } from '../../custom-hooks/';
+import { useListenKeyPress } from '../../custom-hooks';
 import {
+  checkTetrominoBlocked,
   moveTetromino,
   rotateTetromino,
   spawnNextTetromino
 } from '../../store/index';
-import { Cell } from './components/Cell';
+import { Cell } from './Cell';
 
 const Matrix = () => {
   const {
     matrix,
     activeTetromino,
+    activeTetrominoLocked,
     tetrominoSpawned
   } = useSelector(state => state.matrix);
 
@@ -23,35 +25,57 @@ const Matrix = () => {
   const direction = useListenKeyPress();
 
   const dispatch = useDispatch();
-
   useEffect(
     () => {
+      let timeout;
+
       if (gameStarted) {
-        dispatch(spawnNextTetromino());
+        timeout = setTimeout(() => {
+          dispatch(spawnNextTetromino());
+        }, 1000);
       }
+
+      return () => clearTimeout(timeout);
     },
     [gameStarted, dispatch]
   );
 
   useEffect(
     () => {
-      if (tetrominoSpawned) {
-        const interval = setInterval(() => {
-          dispatch(moveTetromino());
-        }, 1000);
-        return () => clearInterval(interval);
-      }
+      console.log('activeTetromino', activeTetromino);
     },
-    [tetrominoSpawned, matrix, activeTetromino, dispatch]
+    [activeTetromino]
   );
 
   useEffect(
     () => {
-      if (direction) {
+      if (activeTetrominoLocked)
+        dispatch(spawnNextTetromino());
+    },
+    [activeTetrominoLocked, dispatch]
+  );
+
+  useEffect(
+    () => {
+      let interval;
+
+      if (tetrominoSpawned && !activeTetrominoLocked)
+        interval = setInterval(() => {
+          dispatch(moveTetromino());
+          dispatch(checkTetrominoBlocked());
+        }, 1000);
+
+      return () => clearInterval(interval);
+    },
+    [tetrominoSpawned, activeTetrominoLocked, dispatch]
+  );
+
+  useEffect(
+    () => {
+      if (direction)
         direction === 'rotate'
           ? dispatch(rotateTetromino())
           : dispatch(moveTetromino(direction));
-      }
     },
     [direction, dispatch]
   );

@@ -1,5 +1,5 @@
-import { useSelector } from 'react-redux';
-import tetrominos from '../../datatypes/types/Tetromino';
+import { Tetromino } from '../../datatypes/types/Tetromino';
+import * as data from './data.json';
 /*
   Based on the original Tetris NES, Random Generator Algorithm:
 
@@ -11,23 +11,25 @@ import tetrominos from '../../datatypes/types/Tetromino';
 
   NOTE: omitted the 7 re-roll as it's arbitrary
 */
+const types = ['I', 'O', 'T', 'S', 'Z', 'J', 'L'];
+
 export const getRandomTetromino = lastType => {
-  let nextNumber;
+  let nextNumber, nextType;
+  let tetrominos = deepCopy(data.default);
 
   do {
     nextNumber = Math.floor(Math.random() * 7);
-  } while (tetrominos[nextNumber].type === lastType);
+    nextType = types[nextNumber];
+  } while (nextType === lastType);
 
-  return tetrominos[nextNumber];
+  return new Tetromino(
+    tetrominos[nextType].type,
+    tetrominos[nextType].coordinates,
+    tetrominos[nextType].rotationalIndex,
+    tetrominos[nextType].rotationalDistances
+  );
 };
 
-export const moveIsValid = (coordinates, matrix) => {
-  let isValid = true;
-
-  coordinates.forEach(({ x, y }) => {
-    console.log(matrix.coordInBounds(x, y));
-    isValid = matrix.coordInBounds(x, y);
-  });
-
-  return isValid;
-};
+function deepCopy(object) {
+  return JSON.parse(JSON.stringify(object));
+}

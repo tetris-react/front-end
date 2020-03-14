@@ -10,6 +10,9 @@ export const Cell = props => {
     >
       <span>{`(${props.coordinate.x}, ${props.coordinate
         .y})`}</span>
+      <span>{`${props.isActive
+        ? 'A'
+        : '_'} · ${props.isLocked ? 'L' : '_'}`}</span>
     </Container>
   );
 };
