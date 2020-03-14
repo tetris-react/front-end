@@ -1,5 +1,6 @@
 import { Cell, Matrix, Tetromino } from '../datatypes';
 import {
+  LOCK_ACTIVE_TETROMINO,
   MOVE_TETROMINO,
   SPAWN_NEXT_TETROMINO
 } from '../index';
@@ -9,9 +10,10 @@ const numColumns = 10;
 
 const initialState = {
   matrix: new Matrix(numRows, numColumns).map2D(
-    (_, x, y) => new Cell(false, false, x, y)
+    (cell, x, y) => new Cell(false, false, x, y)
   ),
   activeTetromino: new Tetromino(),
+  activeTetrominoLocked: false,
   tetrominoSpawned: false
 };
 
@@ -21,6 +23,7 @@ const matrixReducer = (state = initialState, action) => {
       return {
         matrix: action.matrix,
         activeTetromino: action.nextTetromino,
+        activeTetrominoLocked: false,
         tetrominoSpawned: true
       };
     }
@@ -30,6 +33,15 @@ const matrixReducer = (state = initialState, action) => {
         matrix: action.matrix,
         activeTetromino: action.activeTetromino,
         ...state
+      };
+    }
+
+    case LOCK_ACTIVE_TETROMINO: {
+      return {
+        ...state,
+        matrix: action.matrix,
+        tetrominoSpawned: false,
+        activeTetrominoLocked: true
       };
     }
 
