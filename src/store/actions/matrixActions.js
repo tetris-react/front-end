@@ -9,6 +9,7 @@ import { getRandomTetromino, moveIsValid } from './helper';
 export const SPAWN_NEXT_TETROMINO = 'SPAWN_NEXT_TETROMINO',
   ROTATE_TETROMINO = 'ROTATE_TETROMINO',
   MOVE_TETROMINO = 'MOVE_TETROMINO',
+  LOCK_ACTIVE_TETROMINO = 'LOCK_ACTIVE_TETROMINO',
   INVALID_MOVE = 'INVALID_MOVE',
   MANUAL_SOFTDROP_TETROMINO = 'SOFT_DROP_TETROMINO',
   MANUAL_FASTDROP_TETROMINO = 'FAST_DROP_TETROMINO';
@@ -27,9 +28,7 @@ export const spawnNextTetromino = () => (
     activeTetromino.type
   );
 
-  nextTetromino.coordinates.forEach(({ x, y }) => {
-    matrix.cell(x, y).activate();
-  });
+  matrix.activateCoordinates(nextTetromino.coordinates);
 
   dispatch({
     type: SPAWN_NEXT_TETROMINO,
@@ -38,22 +37,58 @@ export const spawnNextTetromino = () => (
   });
 };
 
+export const checkTetrominoBlocked = (
+  direction = 'down'
+) => (dispatch, state) => {
+  let { matrix, activeTetromino } = state().matrix;
+  const nextCoords = activeTetromino.getNextCoords(
+    direction
+  );
+
+  if (
+    matrix.inBounds(nextCoords) == false ||
+    matrix.notBlocked(nextCoords) == false
+  ) {
+    matrix.lockCoordinates(activeTetromino.coordinates);
+    matrix.deactivateCoordinates(
+      activeTetromino.coordinates
+    );
+
+    dispatch({
+      type: LOCK_ACTIVE_TETROMINO,
+      matrix: matrix,
+      activeTetromino
+    });
+  }
+};
+
 export const moveTetromino = (direction = 'down') => (
   dispatch,
   state
 ) => {
   let { matrix, activeTetromino } = state().matrix;
-  const nextCoords = activeTetromino.shift(direction)
-    .coordinates;
+  const nextCoords = activeTetromino.getNextCoords(
+    direction
+  );
 
-  if (matrix.inBounds(nextCoords)) {
-    // deactivate all cells
-    matrix.forEach2D(cell => cell.deactivate());
+  // console.log(
+  //   'activeTetromino.coordinates',
+  //   activeTetromino.coordinates
+  // );
 
-    // activate cells for next position
-    nextCoords.forEach(({ x, y }) => {
-      matrix.cell(x, y).activate();
-    });
+  if (
+    matrix.inBounds(nextCoords) &&
+    matrix.notBlocked(nextCoords)
+  ) {
+    // deactivate cells for current position
+    matrix.deactivateCoordinates(
+      activeTetromino.coordinates
+    );
+
+    matrix.activateCoordinates(nextCoords);
+
+    // shifts coordinates of activeTetromino
+    activeTetromino.shift(direction);
 
     dispatch({
       type: MOVE_TETROMINO,
@@ -61,12 +96,8 @@ export const moveTetromino = (direction = 'down') => (
       activeTetromino
     });
   } else {
-    // shift the tetromino back
-    activeTetromino.unshift(direction);
-
     dispatch({
-      type: INVALID_MOVE,
-      activeTetromino
+      type: INVALID_MOVE
     });
   }
 };
