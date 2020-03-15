@@ -79,10 +79,12 @@ Matrix.prototype.lockCoordinates = function(coordinates) {
 };
 
 Matrix.prototype.activateCoordinates = function(
-  coordinates
+  coordinates,
+  color
 ) {
   coordinates.forEach(({ x, y }) => {
     this.cell(x, y).isActive = true;
+    this.cell(x, y).color = color;
   });
 };
 
@@ -97,3 +99,61 @@ Matrix.prototype.deactivateCoordinates = function(
 Matrix.prototype.cell = function(x, y) {
   return this.matrix[y][x];
 };
+
+Matrix.prototype.filterEmptyRows = function() {
+  this.matrix.filter((row, i, rows) => {});
+};
+
+Matrix.prototype.deleteRows = function(rows) {
+  rows
+    .filter((row, i, rows) => rows.indexOf(row) === i)
+    .forEach(row => {
+      this.matrix[row].forEach(cell => {
+        cell.isActive = false;
+        cell.isLocked = false;
+      });
+    });
+
+  return this;
+};
+
+Matrix.prototype.deleteFilledRows = function(coordinates) {
+  const filledRows = coordinates
+    // map for just y coordinate values
+    .map(coord => coord.y)
+    // filter out duplicate y coordinates
+    .filter((y, i, yCoords) => yCoords.indexOf(y) === i)
+    // filter out y coordinates for filled rows
+    .filter(y => this.rowFilled(y));
+
+  console.log('filledRows', filledRows);
+
+  // return a filtered matrix with the filled rows removed
+  return this.matrix.filter((_, i) => {
+    console.log('i', i);
+    console.log(filledRows.includes(i));
+    return !filledRows.includes(i);
+  });
+};
+
+Matrix.prototype.rowFilled = function(row) {
+  let filled = true;
+
+  this.matrix[row].forEach(cell => {
+    if (cell.isLocked === false) filled = false;
+  });
+
+  return filled;
+};
+
+Matrix.prototype.rowEmpty = function(row) {
+  let empty = true;
+
+  this.matrix[row].forEach(cell => {
+    if (cell.isLocked) empty = false;
+  });
+
+  return empty;
+};
+
+Matrix.prototype.collapse = function() {};

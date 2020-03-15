@@ -1,7 +1,14 @@
 /********************************************************
 *                         CELL                          *
 ********************************************************/
-export const Cell = function(isActive, isLocked, x, y) {
+export const Cell = function(
+  color,
+  isActive,
+  isLocked,
+  x,
+  y
+) {
+  this.color = color;
   this.isActive = isActive;
   this.isLocked = isLocked;
   this.x = x;

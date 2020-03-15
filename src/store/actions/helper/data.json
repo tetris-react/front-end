@@ -1,6 +1,7 @@
 {
   "I": {
     "type": "I",
+    "color": "#50F0F0",
     "rotationalIndex": 0,
     "coordinates": [
       { "x": 3, "y": 0 },
@@ -37,6 +38,7 @@
   },
   "O": {
     "type": "O",
+    "color": "#F0F003",
     "rotationalIndex": -1,
     "coordinates": [
       { "x": 4, "y": 0 },
@@ -48,6 +50,7 @@
   },
   "T": {
     "type": "T",
+    "color": "#A001F0",
     "rotationalIndex": 0,
     "coordinates": [
       { "x": 4, "y": 0 },
@@ -84,6 +87,7 @@
   },
   "S": {
     "type": "S",
+    "color": "#49F000",
     "rotationalIndex": 0,
     "coordinates": [
       { "x": 5, "y": 0 },
@@ -120,6 +124,7 @@
   },
   "Z": {
     "type": "Z",
+    "color": "#F00001",
     "rotationalIndex": 0,
     "coordinates": [
       { "x": 4, "y": 0 },
@@ -156,6 +161,7 @@
   },
   "J": {
     "type": "J",
+    "color": "#1D00F0",
     "rotationalIndex": 0,
     "coordinates": [
       { "x": 4, "y": 0 },
@@ -192,6 +198,7 @@
   },
   "L": {
     "type": "L",
+    "color": "#F0A001",
     "rotationalIndex": 0,
     "coordinates": [
       { "x": 4, "y": 0 },

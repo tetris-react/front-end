@@ -7,6 +7,7 @@ export const Cell = props => {
     <Container
       isLocked={props.isLocked}
       isActive={props.isActive}
+      color={props.color}
     >
       <span>{`(${props.coordinate.x}, ${props.coordinate
         .y})`}</span>
@@ -24,11 +25,9 @@ const Container = styled.div`
   align-items: center;
   width: 10%;
   height: 5%;
-  border: 1px solid white;
+  border: 1px solid #d0d0df;
   background-color: ${props =>
-    props.isLocked || props.isActive
-      ? 'black'
-      : 'lightgrey'};
+    (props.isLocked || props.isActive) && props.color};
 
   color: ${props =>
     props.isLocked || props.isActive ? 'white' : 'black'};

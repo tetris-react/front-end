@@ -3,54 +3,40 @@ import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { useListenKeyPress } from '../../custom-hooks';
 import {
+  checkFilledRows,
   checkTetrominoBlocked,
   moveTetromino,
-  rotateTetromino,
   spawnNextTetromino
 } from '../../store/index';
 import { Cell } from './Cell';
 
 const Matrix = () => {
+  const direction = useListenKeyPress();
+  const dispatch = useDispatch();
+
   const {
     matrix,
-    activeTetromino,
     activeTetrominoLocked,
     tetrominoSpawned
   } = useSelector(state => state.matrix);
 
-  const gameStarted = useSelector(
-    state => state.game.started
+  const { gameStarted, delay } = useSelector(
+    state => state.game
   );
 
-  const direction = useListenKeyPress();
-
-  const dispatch = useDispatch();
   useEffect(
     () => {
-      let timeout;
-
-      if (gameStarted) {
-        timeout = setTimeout(() => {
-          dispatch(spawnNextTetromino());
-        }, 1000);
-      }
-
-      return () => clearTimeout(timeout);
+      if (gameStarted) dispatch(spawnNextTetromino());
     },
     [gameStarted, dispatch]
   );
 
   useEffect(
     () => {
-      console.log('activeTetromino', activeTetromino);
-    },
-    [activeTetromino]
-  );
-
-  useEffect(
-    () => {
-      if (activeTetrominoLocked)
+      if (activeTetrominoLocked) {
+        dispatch(checkFilledRows());
         dispatch(spawnNextTetromino());
+      }
     },
     [activeTetrominoLocked, dispatch]
   );
@@ -61,21 +47,23 @@ const Matrix = () => {
 
       if (tetrominoSpawned && !activeTetrominoLocked)
         interval = setInterval(() => {
-          dispatch(moveTetromino());
           dispatch(checkTetrominoBlocked());
-        }, 1000);
+          dispatch(moveTetromino());
+        }, delay);
 
       return () => clearInterval(interval);
     },
-    [tetrominoSpawned, activeTetrominoLocked, dispatch]
+    [
+      tetrominoSpawned,
+      activeTetrominoLocked,
+      delay,
+      dispatch
+    ]
   );
 
   useEffect(
     () => {
-      if (direction)
-        direction === 'rotate'
-          ? dispatch(rotateTetromino())
-          : dispatch(moveTetromino(direction));
+      if (direction) dispatch(moveTetromino(direction));
     },
     [direction, dispatch]
   );
@@ -88,6 +76,7 @@ const Matrix = () => {
             key={i}
             isLocked={cell.isLocked}
             isActive={cell.isActive}
+            color={cell.color}
             coordinate={{
               x: cell.x,
               y: cell.y

@@ -19,7 +19,8 @@ export {
   spawnNextTetromino,
   checkTetrominoBlocked,
   moveTetromino,
-  rotateTetromino
+  rotateTetromino,
+  checkFilledRows
 } from './actions/matrixActions';
 
 /********************************************************
@@ -33,6 +34,7 @@ export {
   LOCK_ACTIVE_TETROMINO,
   MOVE_TETROMINO,
   INVALID_MOVE,
+  ROWS_DELETED,
   MANUAL_SOFTDROP_TETROMINO,
   MANUAL_FASTDROP_TETROMINO
 } from './actions/matrixActions';
