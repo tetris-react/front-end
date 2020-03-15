@@ -24,6 +24,7 @@ export const getRandomTetromino = lastType => {
 
   return new Tetromino(
     tetrominos[nextType].type,
+    tetrominos[nextType].color,
     tetrominos[nextType].coordinates,
     tetrominos[nextType].rotationalIndex,
     tetrominos[nextType].rotationalDistances
