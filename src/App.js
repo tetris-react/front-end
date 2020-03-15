@@ -6,7 +6,7 @@ import StartGameModal from './components/modals/StartGameModal';
 
 function App() {
   const gameStarted = useSelector(
-    state => state.game.started
+    state => state.game.gameStarted
   );
 
   return (
