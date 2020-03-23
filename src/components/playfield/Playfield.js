@@ -4,11 +4,12 @@ import styled from 'styled-components';
 import { DOWN } from '../../constants';
 import { useInterval, useListenKeyPress } from '../../hooks';
 import {
+  calculateScore,
   checkIfBlocked,
   collapseEmptyRows,
   moveTetrad,
   spawnTetrad
-} from '../../store/actions/playfieldActions';
+} from '../../store';
 import Row from './Row';
 
 const Playfield = () => {
@@ -21,6 +22,7 @@ const Playfield = () => {
   useEffect(
     () => {
       if (tetradLocked) {
+        dispatch(calculateScore());
         dispatch(collapseEmptyRows());
         dispatch(spawnTetrad(tetrad.type));
       }
