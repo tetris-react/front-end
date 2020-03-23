@@ -1,16 +1,13 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
-import {
-  beginTetris,
-  spawnNextTetromino
-} from '../../store';
+import { startGame } from '../../store';
 
 const StartGameModal = () => {
   const dispatch = useDispatch();
 
   const handleClick = () => {
-    dispatch(beginTetris());
+    dispatch(startGame());
   };
 
   return (
