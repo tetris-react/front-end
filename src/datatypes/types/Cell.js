@@ -2,11 +2,11 @@
 *                         CELL                          *
 ********************************************************/
 export const Cell = function(
-  color,
-  isActive,
-  isLocked,
-  x,
-  y
+  x = 0,
+  y = 0,
+  color = '#000000',
+  isActive = false,
+  isLocked = false
 ) {
   this.color = color;
   this.isActive = isActive;

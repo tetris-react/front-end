@@ -1,1 +1,1 @@
-export { default as Matrix } from './matrix/Matrix';
+export { default as Playfield } from './playfield/Playfield';

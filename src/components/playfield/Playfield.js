@@ -1,17 +1,64 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
-import { useListenKeyPress } from '../../custom-hooks';
+import { DOWN } from '../../constants';
+import { useInterval, useListenKeyPress } from '../../hooks';
 import {
-  checkFilledRows,
-  checkTetrominoBlocked,
-  moveTetromino,
-  spawnNextTetromino
-} from '../../store/index';
-import { Cell } from './Cell';
+  checkIfBlocked,
+  collapseEmptyRows,
+  moveTetrad,
+  spawnTetrad
+} from '../../store/actions/playfieldActions';
+import Row from './Row';
 
-const Matrix = () => {
-  const direction = useListenKeyPress();
+const Playfield = () => {
+  const dispatch = useDispatch();
+  const { matrix, tetrad, tetradLocked } = useSelector(
+    state => state.playfield
+  );
+  const { dropDelay } = useSelector(state => state.game);
+
+  useEffect(
+    () => {
+      if (tetradLocked) {
+        dispatch(collapseEmptyRows());
+        dispatch(spawnTetrad(tetrad.type));
+      }
+    },
+    [tetradLocked, tetrad, dispatch]
+  );
+
+  useInterval(() => {
+    dispatch(checkIfBlocked());
+    dispatch(moveTetrad(DOWN));
+  }, dropDelay);
+
+  useListenKeyPress(direction => {
+    dispatch(moveTetrad(direction));
+  });
+
+  return (
+    <Container>
+      {matrix.matrix.map((row, y) => <Row key={y} row={row} yCoord={y} />)}
+    </Container>
+  );
+};
+
+const Container = styled.div`
+  width: 100vw;
+  height: 56.25vw;
+  max-width: calc(100% / 3);
+  max-height: 100vh;
+  margin: auto;
+
+  background-color: #d0d0df;
+`;
+
+export default Playfield;
+
+/*
+
+const direction = useListenKeyPress();
   const dispatch = useDispatch();
 
   const {
@@ -68,38 +115,4 @@ const Matrix = () => {
     [direction, dispatch]
   );
 
-  return (
-    <Container>
-      {matrix.flatten().map((cell, i) => {
-        return (
-          <Cell
-            key={i}
-            isLocked={cell.isLocked}
-            isActive={cell.isActive}
-            color={cell.color}
-            coordinate={{
-              x: cell.x,
-              y: cell.y
-            }}
-          />
-        );
-      })}
-    </Container>
-  );
-};
-
-const Container = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-
-  width: 100vw;
-  height: 56.25vw;
-  max-width: calc(100% / 3);
-  max-height: 100vh;
-  margin: auto;
-
-  background-color: #d0d0df;
-`;
-
-export default Matrix;
+  */
