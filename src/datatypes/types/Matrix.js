@@ -1,4 +1,4 @@
-import { NUM_COLS, NUM_ROWS } from '../../../constants';
+import { NUM_COLS, NUM_ROWS } from '../../constants';
 import { deepCopy } from '../helper';
 import { Cell } from './Cell';
 

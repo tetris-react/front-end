@@ -1,6 +1,6 @@
 import { NUM_COLS, NUM_ROWS } from '../../constants';
-import { Tetrad } from '../datatypes';
-import { Matrix } from '../datatypes/types/Matrix';
+import { Tetrad } from '../../datatypes';
+import { Matrix } from '../../datatypes';
 import {
   COLLAPSE_ROWS,
   DELETE_ROW,
