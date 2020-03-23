@@ -1,23 +1,23 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
-import { Matrix } from './components';
+import { Playfield } from './components';
 import StartGameModal from './components/modals/StartGameModal';
 
 function App() {
-  const gameStarted = useSelector(
-    state => state.game.gameStarted
-  );
+  const { gameStarted } = useSelector(state => state.game);
 
   return (
     <Container>
       {!gameStarted && <StartGameModal />}
       <PlaceHolder />
-      <Matrix />
+      <Playfield />
       <PlaceHolder />
     </Container>
   );
 }
+
+export default App;
 
 const Container = styled.div`
   display: flex;
@@ -52,5 +52,3 @@ const PlaceHolder = styled.div`
 
   background-color: #a0d0df;
 `;
-
-export default App;
