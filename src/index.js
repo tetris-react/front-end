@@ -11,10 +11,7 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import rootReducer from './store';
 
-const store = createStore(
-  rootReducer,
-  applyMiddleware(thunk, logger)
-);
+const store = createStore(rootReducer, applyMiddleware(thunk, logger));
 
 const AppContainer = styled.div`
   display: flex;
