@@ -2,39 +2,33 @@
 *                        REDUCERS                      *
 ********************************************************/
 import { combineReducers } from 'redux';
-import gamePlayReducer from './reducers/gamePlayReducer';
-import matrixReducer from './reducers/matrixReducer';
+import gameReducer from './reducers/gameReducer';
+import playfieldReducer from './reducers/playfieldReducer';
 
 export default combineReducers({
-  matrix: matrixReducer,
-  game: gamePlayReducer
+  playfield: playfieldReducer,
+  game: gameReducer
 });
 
 /********************************************************
 *                     ACTION CREATORS                   *
 ********************************************************/
-export { beginTetris } from './actions/gamePlayActions';
-
+export { startGame } from './actions/gameActions';
 export {
-  spawnNextTetromino,
-  checkTetrominoBlocked,
-  moveTetromino,
-  rotateTetromino,
-  checkFilledRows
-} from './actions/matrixActions';
+  spawnTetrad,
+  moveTetrad,
+  deleteFilledRow
+} from './actions/playfieldActions';
 
 /********************************************************
 *                       ACTION TYPES                    *
 ********************************************************/
-export { BEGIN_TETRIS } from './actions/gamePlayActions';
+export { START_GAME } from './actions/gameActions';
 
 export {
-  SPAWN_NEXT_TETROMINO,
-  ROTATE_TETROMINO,
-  LOCK_ACTIVE_TETROMINO,
-  MOVE_TETROMINO,
-  INVALID_MOVE,
-  ROWS_DELETED,
-  MANUAL_SOFTDROP_TETROMINO,
-  MANUAL_FASTDROP_TETROMINO
-} from './actions/matrixActions';
+  SPAWN_TETRAD,
+  MOVE_TETRAD,
+  TETRAD_LOCKED,
+  DELETE_ROW,
+  COLLAPSE_ROWS
+} from './actions/playfieldActions';
