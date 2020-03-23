@@ -1,8 +1,9 @@
+import { G } from '../../constants';
 import { START_GAME } from '../index';
-
 const initialState = {
   gameStarted: false,
-  dropDelay: 500
+  frameRate: G[10],
+  level: 0
 };
 
 const gameReducer = (state = initialState, action) => {

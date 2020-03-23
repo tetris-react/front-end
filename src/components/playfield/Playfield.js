@@ -16,7 +16,7 @@ const Playfield = () => {
   const { matrix, tetrad, tetradLocked } = useSelector(
     state => state.playfield
   );
-  const { dropDelay } = useSelector(state => state.game);
+  const { frameRate } = useSelector(state => state.game);
 
   useEffect(
     () => {
@@ -31,7 +31,7 @@ const Playfield = () => {
   useInterval(() => {
     dispatch(checkIfBlocked());
     dispatch(moveTetrad(DOWN));
-  }, dropDelay);
+  }, frameRate);
 
   useListenKeyPress(direction => {
     dispatch(moveTetrad(direction));
