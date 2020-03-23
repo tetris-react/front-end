@@ -13,17 +13,19 @@ export default combineReducers({
 /********************************************************
 *                     ACTION CREATORS                   *
 ********************************************************/
-export { startGame } from './actions/gameActions';
+export { startGame, calculateScore } from './actions/gameActions';
 export {
   spawnTetrad,
   moveTetrad,
-  deleteFilledRow
+  deleteFilledRow,
+  checkIfBlocked,
+  collapseEmptyRows
 } from './actions/playfieldActions';
 
 /********************************************************
 *                       ACTION TYPES                    *
 ********************************************************/
-export { START_GAME } from './actions/gameActions';
+export { START_GAME, CALCULATE_SCORE } from './actions/gameActions';
 
 export {
   SPAWN_TETRAD,

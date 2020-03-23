@@ -1,9 +1,11 @@
 import { G } from '../../constants';
-import { START_GAME } from '../index';
+import { CALCULATE_SCORE, START_GAME } from '../index';
 const initialState = {
   gameStarted: false,
-  frameRate: G[10],
-  level: 0
+  frameRate: G[0],
+  rowsCleared: 0,
+  level: 0,
+  score: 0
 };
 
 const gameReducer = (state = initialState, action) => {
@@ -12,6 +14,14 @@ const gameReducer = (state = initialState, action) => {
       return {
         ...state,
         gameStarted: true
+      };
+    case CALCULATE_SCORE:
+      return {
+        ...state,
+        rowsCleared: action.payload.rowsCleared,
+        level: action.payload.level,
+        score: action.payload.score,
+        frameRate: G[action.payload.level]
       };
     default:
       return state;
