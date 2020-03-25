@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
-const useInterval = (callback, dropDelay) => {
+const useInterval = (callback, frameRate) => {
   const savedCallback = useRef();
   const { gameStarted } = useSelector(state => state.game);
   // Remember the latest callback.
@@ -17,14 +17,14 @@ const useInterval = (callback, dropDelay) => {
       function tick() {
         savedCallback.current();
       }
-      if (gameStarted && dropDelay !== null) {
-        const id = setInterval(tick, dropDelay);
+      if (gameStarted && frameRate !== null) {
+        const id = setInterval(tick, frameRate * 16.6666666667);
         return () => {
           clearInterval(id);
         };
       }
     },
-    [dropDelay, gameStarted]
+    [frameRate, gameStarted]
   );
 };
 
