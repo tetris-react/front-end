@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { Playfield } from './components';
 import StartGameModal from './components/modals/StartGameModal';
+import ScoreBoard from './components/score/ScoreBoard';
 
 function App() {
   const { gameStarted } = useSelector(state => state.game);
@@ -10,9 +11,11 @@ function App() {
   return (
     <Container>
       {!gameStarted && <StartGameModal />}
-      <PlaceHolder />
+      <Column />
       <Playfield />
-      <PlaceHolder />
+      <Column>
+        <ScoreBoard />
+      </Column>
     </Container>
   );
 }
@@ -37,7 +40,7 @@ const Container = styled.div`
   background-color: #c0c0c0;
 `;
 
-const PlaceHolder = styled.div`
+const Column = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;

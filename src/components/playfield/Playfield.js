@@ -4,11 +4,12 @@ import styled from 'styled-components';
 import { DOWN } from '../../constants';
 import { useInterval, useListenKeyPress } from '../../hooks';
 import {
+  calculateScore,
   checkIfBlocked,
   collapseEmptyRows,
   moveTetrad,
   spawnTetrad
-} from '../../store/actions/playfieldActions';
+} from '../../store';
 import Row from './Row';
 
 const Playfield = () => {
@@ -16,11 +17,12 @@ const Playfield = () => {
   const { matrix, tetrad, tetradLocked } = useSelector(
     state => state.playfield
   );
-  const { dropDelay } = useSelector(state => state.game);
+  const { frameRate } = useSelector(state => state.game);
 
   useEffect(
     () => {
       if (tetradLocked) {
+        dispatch(calculateScore());
         dispatch(collapseEmptyRows());
         dispatch(spawnTetrad(tetrad.type));
       }
@@ -31,7 +33,7 @@ const Playfield = () => {
   useInterval(() => {
     dispatch(checkIfBlocked());
     dispatch(moveTetrad(DOWN));
-  }, dropDelay);
+  }, frameRate);
 
   useListenKeyPress(direction => {
     dispatch(moveTetrad(direction));
