@@ -1,8 +1,10 @@
-@import '../node_modules/reset-css/reset.css';
+/* @import '../node_modules/reset-css/reset.css'; */
+@import '../node_modules/normalize.css/normalize.css';
 
 html {
+  font-family: 'Righteous', cursive;
+  background: #212121;
   font-size: 62.5%;
-  font-family: 'Lato';
 }
 
 * {

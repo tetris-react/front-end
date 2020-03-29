@@ -1,7 +1,7 @@
 {
   "I": {
     "type": "I",
-    "color": "#50F0F0",
+    "color": "#00bcd4",
     "orientation": 0,
     "prevCoordinates": [],
     "coordinates": [
@@ -39,7 +39,7 @@
   },
   "O": {
     "type": "O",
-    "color": "#F0F003",
+    "color": "#ffeb3b",
     "orientation": -1,
     "prevCoordinates": [],
     "coordinates": [
@@ -77,7 +77,7 @@
   },
   "T": {
     "type": "T",
-    "color": "#A001F0",
+    "color": "#673ab7",
     "orientation": 0,
     "prevCoordinates": [],
     "coordinates": [
@@ -115,7 +115,7 @@
   },
   "S": {
     "type": "S",
-    "color": "#49F000",
+    "color": "#8bc34a",
     "orientation": 0,
     "prevCoordinates": [],
     "coordinates": [
@@ -153,7 +153,7 @@
   },
   "Z": {
     "type": "Z",
-    "color": "#F00001",
+    "color": "#f44336",
     "orientation": 0,
     "prevCoordinates": [],
     "coordinates": [
@@ -191,7 +191,7 @@
   },
   "J": {
     "type": "J",
-    "color": "#1D00F0",
+    "color": "#3f51b5",
     "orientation": 0,
     "prevCoordinates": [],
     "coordinates": [
@@ -229,7 +229,7 @@
   },
   "L": {
     "type": "L",
-    "color": "#F0A001",
+    "color": "#ffc107",
     "orientation": 0,
     "prevCoordinates": [],
     "coordinates": [
