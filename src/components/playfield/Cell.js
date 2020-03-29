@@ -30,7 +30,7 @@ const Container = styled.div`
 
   color: ${props => (props.isLocked || props.isActive ? 'white' : 'black')};
 
-  box-shadow: 0px 4px 15px
+  box-shadow: 0px 0px 15px
     ${props =>
       props.isActive || props.isLocked ? props.color : 'transparent'};
 
