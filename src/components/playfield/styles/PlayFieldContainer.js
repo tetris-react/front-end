@@ -7,7 +7,7 @@ const PlayFieldContainer = styled.div`
   max-height: 100vh;
   margin: auto;
 
-  background-color: #d0d0df;
+  background-color: #212121;
 `;
 
 export default PlayFieldContainer;

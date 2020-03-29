@@ -7,6 +7,7 @@ import { AppContainer, Column as PlaceHolder } from './styles';
 
 function Tetris() {
   const { gameStarted } = useSelector(state => state.game);
+  // const gameStarted = true;
 
   return (
     <AppContainer>

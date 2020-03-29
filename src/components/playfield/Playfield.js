@@ -9,8 +9,8 @@ import {
   moveTetrad,
   spawnTetrad
 } from '../../store';
-import { PlayFieldContainer } from '../../styles';
 import Row from './Row';
+import PlayFieldContainer from './styles/PlayFieldContainer';
 
 const Playfield = () => {
   const dispatch = useDispatch();
