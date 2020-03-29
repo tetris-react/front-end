@@ -29,4 +29,8 @@ const Container = styled.div`
     (props.isLocked || props.isActive) && props.color};
 
   color: ${props => (props.isLocked || props.isActive ? 'white' : 'black')};
+
+  span {
+    font-size: 10px;
+  }
 `;
